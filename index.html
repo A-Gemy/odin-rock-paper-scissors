@@ -9,8 +9,18 @@
   <body>
     <div class="flex">
       <h1>Rock Paper Scissors</h1>
-      <p>This is a console game, Open the console to see the result</p>
-      <button onclick="game()">Start game</button>
+      <!-- <p>This is a console game, Open the console to see the result</p> -->
+      <!-- <button class="play" onclick="game()">Start game</button> -->
+      <div class="selections">
+        <button class="selection rock" value="rock">Rock</button>
+        <button class="selection paper" value="paper">Paper</button>
+        <button class="selection scissors" value="scissors">Scissors</button>
+      </div>
+      <div class="output">
+        <p class="player-select"></p>
+        <p class="computer-select"></p>
+        <p class="winner"></p>
+      </div>
     </div>
     <!-- Add external script file -->
     <script src="js/app.js"></script>

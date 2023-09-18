@@ -1,14 +1,31 @@
 // This array to let computer choose from
 let arr = ["rock", "paper", "scissors"];
 let winners = [];
+// Select Elements
+let playerOutput = document.querySelector(".player-select");
+let computeOutput = document.querySelector(".computer-select");
+let winnerOutput = document.querySelector(".winner");
 
-// Start of the game
-function game() {
-  for (let i = 1; i <= 5; i++) {
-    playRound(i);
-  }
-  logsWins();
+/************************
+----- UI - Version -----
+***********************/
+
+let btnEl = document.querySelectorAll(".selection");
+btnEl.forEach(function (btn) {
+  btn.addEventListener("click", getPlayerSelection);
+});
+
+/*********************/
+function getPlayerSelection(e) {
+  playerOutput.textContent = `You selected: ${e.target.innerHTML.toLowerCase()}`;
+  let computerSelection = getComputerChoice();
+  // console.log(computerSelection);
+  let winner = checkWinner(e.target.innerHTML.toLowerCase(), computerSelection);
+  winnerOutput.textContent = winner;
+  winners.push(winner);
+  logRound(e.target.innerHTML.toLowerCase(), computerSelection, winner, round);
 }
+/********************/
 
 // play one round
 function playRound(round) {
@@ -20,39 +37,13 @@ function playRound(round) {
   // console.log(winner);
 }
 
-// Function for player choice playerSelection
-function getPlayerSelection() {
-  // Take user input
-  let input = prompt("Paper, Rock or Scissors");
-  // Make sure player select an option
-  while (input == null) {
-    input = prompt("Paper, Rock or Scissors");
-  }
-  input = input.toLowerCase();
-  // Validate user input
-  let check = validate(input);
-  while (check == false) {
-    input = prompt("Please choose one of: Paper, Rock or Scissors");
-    while (input == null) {
-      input = prompt("Paper, Rock or Scissors");
-    }
-    input = input.toLowerCase();
-    check = validate(input);
-  }
-  return input;
-}
-
 // Function for computer random choice
 function getComputerChoice() {
-  return arr[Math.floor(Math.random() * arr.length)];
+  let comSelection = arr[Math.floor(Math.random() * arr.length)];
+  computeOutput.textContent = `Computer selected: ${comSelection}`;
+  return comSelection;
 }
 
-// Validation of user input
-function validate(input) {
-  return arr.includes(input);
-}
-
-// Compare two choices and select winner
 function checkWinner(choiceP, choiceC) {
   if (choiceP === choiceC) {
     return "Tie";
@@ -97,8 +88,19 @@ function logsWins() {
 // log rounds
 function logRound(playerChoice, computerChoice, winner, round) {
   console.log("Round:", round);
+  round++;
   console.log("Player choose:", playerChoice);
   console.log("Computer choose:", computerChoice);
   console.log(winner);
   console.log("--------------------");
 }
+
+// Start of the game - Commented
+// function game() {
+//   // play 5 Rounds
+//   for (let i = 1; i <= 5; i++) {
+//     playRound(i);
+//   }
+//   playRound();
+//   logsWins();
+// }
