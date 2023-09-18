@@ -1,49 +1,41 @@
 // This array to let computer choose from
 let arr = ["rock", "paper", "scissors"];
 let winners = [];
-// Select Elements
+
+// Selecting DOM elements
+let btnEl = document.querySelectorAll(".selection");
 let playerOutput = document.querySelector(".player-select");
-let computeOutput = document.querySelector(".computer-select");
+let computerOutput = document.querySelector(".computer-select");
 let winnerOutput = document.querySelector(".winner");
 
-/************************
------ UI - Version -----
-***********************/
-
-let btnEl = document.querySelectorAll(".selection");
+// Function for player choice and Computer choice
 btnEl.forEach(function (btn) {
-  btn.addEventListener("click", getPlayerSelection);
+  btn.addEventListener("click", playRound);
 });
 
-/*********************/
-function getPlayerSelection(e, round) {
-  let eValue = e.target.innerHTML.toLowerCase();
-  playerOutput.textContent = `You selected: ${eValue}`;
+// Play one Round
+function playRound(e) {
+  let playerSelection = e.target.value;
   let computerSelection = getComputerChoice();
-  // console.log(computerSelection);
-  let winner = checkWinner(eValue, computerSelection);
-  winnerOutput.textContent = winner;
-  winners.push(winner);
-  logRound(eValue, computerSelection, winner, round);
+  output(playerSelection, computerSelection);
 }
-/********************/
 
-// play one round
-function playRound(round) {
-  const playerSelection = getPlayerSelection();
-  const computerSelection = getComputerChoice();
-  const winner = checkWinner(playerSelection, computerSelection);
+// Output Round
+function output(playerChoice, computerChoice) {
+  playerOutput.textContent = `You selected: ${playerChoice}`;
+  computerOutput.textContent = `Computer selected: ${computerChoice}`;
+  let winner = checkWinner(playerChoice, computerChoice);
   winners.push(winner);
-  game();
+  // console.log(winners);
+  winnerOutput.textContent = winner;
 }
 
 // Function for computer random choice
 function getComputerChoice() {
-  let comSelection = arr[Math.floor(Math.random() * arr.length)];
-  computeOutput.textContent = `Computer selected: ${comSelection}`;
-  return comSelection;
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// Compare two choices and select winner
 function checkWinner(choiceP, choiceC) {
   if (choiceP === choiceC) {
     return "Tie";
@@ -58,48 +50,15 @@ function checkWinner(choiceP, choiceC) {
   }
 }
 
-// logs wins
 function logsWins() {
   let playerWins = winners.filter((item) => item == "You Win!").length;
   let computerWins = winners.filter((item) => item == "You Lose!").length;
   let ties = winners.filter((item) => item == "Tie").length;
-
-  console.log("Results:");
-  console.log("Player wins:", playerWins);
-  console.log("Computer wins:", computerWins);
-  console.log("Ties:", ties);
-
   if (playerWins > computerWins) {
-    console.log("********************");
     console.log("YOU WON THE GAME, CONGRATULATIONS!");
-    console.log("********************");
   } else if (playerWins < computerWins) {
-    console.log("********************");
     console.log("YOU LOSE THIS TIME, TRY AGAIN.");
-    console.log("********************");
   } else {
-    console.log("********************");
     console.log("NOBODY WON!");
-    console.log("********************");
   }
-  winners = [];
-}
-
-// log rounds
-function logRound(playerChoice, computerChoice, winner, round) {
-  console.log("Round:", round);
-  console.log("Player choose:", playerChoice);
-  console.log("Computer choose:", computerChoice);
-  console.log(winner);
-  console.log("--------------------");
-}
-
-// Start of the game - Commented
-function game() {
-  // play 5 Rounds
-  for (let i = 1; i <= 5; i++) {
-    playRound(i);
-  }
-  playRound();
-  logsWins();
 }
