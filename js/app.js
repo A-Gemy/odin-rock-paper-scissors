@@ -16,14 +16,15 @@ btnEl.forEach(function (btn) {
 });
 
 /*********************/
-function getPlayerSelection(e) {
-  playerOutput.textContent = `You selected: ${e.target.innerHTML.toLowerCase()}`;
+function getPlayerSelection(e, round) {
+  let eValue = e.target.innerHTML.toLowerCase();
+  playerOutput.textContent = `You selected: ${eValue}`;
   let computerSelection = getComputerChoice();
   // console.log(computerSelection);
-  let winner = checkWinner(e.target.innerHTML.toLowerCase(), computerSelection);
+  let winner = checkWinner(eValue, computerSelection);
   winnerOutput.textContent = winner;
   winners.push(winner);
-  logRound(e.target.innerHTML.toLowerCase(), computerSelection, winner, round);
+  logRound(eValue, computerSelection, winner, round);
 }
 /********************/
 
@@ -33,8 +34,7 @@ function playRound(round) {
   const computerSelection = getComputerChoice();
   const winner = checkWinner(playerSelection, computerSelection);
   winners.push(winner);
-  logRound(playerSelection, computerSelection, winner, round);
-  // console.log(winner);
+  game();
 }
 
 // Function for computer random choice
@@ -88,7 +88,6 @@ function logsWins() {
 // log rounds
 function logRound(playerChoice, computerChoice, winner, round) {
   console.log("Round:", round);
-  round++;
   console.log("Player choose:", playerChoice);
   console.log("Computer choose:", computerChoice);
   console.log(winner);
@@ -96,11 +95,11 @@ function logRound(playerChoice, computerChoice, winner, round) {
 }
 
 // Start of the game - Commented
-// function game() {
-//   // play 5 Rounds
-//   for (let i = 1; i <= 5; i++) {
-//     playRound(i);
-//   }
-//   playRound();
-//   logsWins();
-// }
+function game() {
+  // play 5 Rounds
+  for (let i = 1; i <= 5; i++) {
+    playRound(i);
+  }
+  playRound();
+  logsWins();
+}
