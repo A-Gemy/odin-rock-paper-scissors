@@ -48,10 +48,20 @@ button.selection {
 }
 
 .output {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
 .output p {
   text-align: center;
   margin-bottom: 10px;
+}
+
+#restart {
+  display: none;
+  padding: 10px 16px;
+  font-size: 24px;
+  font-weight: bold;
+  align-self: center;
 }
